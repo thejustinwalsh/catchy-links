@@ -29,7 +29,11 @@ dotenv.config({ path: join(root(), '..', '.env.local') });
   console.log(chalk.yellow('Generated Slugs:'), path);
 
   //* Seed the sequence generator
-  const base = seed(2);
+  const base = seed(
+    process.env.RANDOM_SEED
+      ? parseInt(process.env.RANDOM_SEED)
+      : Math.floor(Math.random() * Math.pow(2, 32))
+  );
   console.log(chalk.yellow('Sequence Seed:'), chalk.cyan(base));
 
   //* Store the seeded index in redis
