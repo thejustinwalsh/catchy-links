@@ -1,34 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Catchy Links 🔗
+> A catchy link shortener for more memorable urls
 
-## Getting Started
+## Features 🚀
+- Generate urls using [friendly words](https://github.com/glitchdotcom/friendly-words)
+- Each url maps to a determinstic shuffled range and is reversable to and from an 32bit int
+- No collisions until > 4,294,967,296 (2^32) links have been geneerated
+- Urls are locked to your own domain by default
+- Rate limiting
 
-First, run the development server:
+## Why 🤷
+Sharing long urls sucks. Depending on a third party service hungry for your data does too.  
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+I wanted to solve the problem of sharing incredibly long urls containing lz-string url encoded source code for the [ts-defold playground](https://ts-defold.dev/playground) site I am hacking on. Once you have crafted a masterpiece in the code playgroud dropping in a full screen URL into discord seems like bad taste. So, this idea was born.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup, Config & Deploy 👷
+1. `npm install`
+2. Edit `env.local` with *ENV Variables*
+3. `npm run boostrap`
+4. `npx vercel`
+5. Configure *ENV variables* on [Vercel](https://vercel.com/docs/environment-variables)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### ENV Variables ✍️
+`FALLBACK_URL` - This url serves two purposes  
+1. Locks the url generation to the domain provided
+2. Is used when the slug is not found to redirect the user to something more useful than a 404
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`REDIS_URL` - The connection info for the backing redis server  
 
-## Learn More
+`SENTRY_DNS` - Sentry DNS connection info for error montioring  
 
-To learn more about Next.js, take a look at the following resources:
+`RATE_LIMIT_WINDOW` - Time in milliseconds before the rate limit is reset (globally)  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`RATE_LIMIT_MAX` - Number of hits within `RATE_LIMIT_WINDOW` before rate limit kicks in
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`RANDOM_SEED` - Used in the bootstrap script so we all aren't generating the same url sequences
 
-## Deploy on Vercel
+## Specifics 🕴️
+Built with ❤️ for 🧑‍🤝‍🧑 on [Next.js](https://nextjs.org), [Upstash](https://upstash.com), and [Sentry](https://sentry.io).  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+It is recomended to use Vercel integrations for Upsatash and Sentry, or do what you want, I am not your mother.  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Rate limiting is using (express-rate-limit)[https://www.npmjs.com/package/express-rate-limit] and is not backed by a store.
+It is being used as failsafe to protect costs of running the service from someone spaming the URL, and is not strict due to the in memory ip lists running serverless.
+
+Fork if you need a feature, PRs always welcome. 🍻
