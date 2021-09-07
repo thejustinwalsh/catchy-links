@@ -47,7 +47,7 @@ Built with ❤️ for 🧑‍🤝‍🧑 on [Next.js](https://nextjs.org), [Upst
 
 It is recomended to use Vercel integrations for Upsatash and Sentry, or do what you want, I am not your mother.  
 
-Rate limiting is using (express-rate-limit)[https://www.npmjs.com/package/express-rate-limit] and is not backed by a store.
+Rate limiting is using [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) and is not backed by a store.
 It is being used as failsafe to protect costs of running the service from someone spaming the URL, and is not strict due to the in memory ip lists running serverless.
 
 Fork if you need a feature, PRs always welcome. 🍻
