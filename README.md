@@ -36,6 +36,12 @@ I wanted to solve the problem of sharing incredibly long urls containing lz-stri
 
 `RANDOM_SEED` - Used in the bootstrap script so we all aren't generating the same url sequences
 
+## API
+`GET`&nbsp;&nbsp;`/[slug]` - Redirect to the url held by the slug  
+
+`POST`&nbsp;&nbsp;`/api/links` - Create a new link `slug` by passing the `url` into the post `body`: `{ url: "https://epiclylong..." }`  
+
+
 ## Specifics 🕴️
 Built with ❤️ for 🧑‍🤝‍🧑 on [Next.js](https://nextjs.org), [Upstash](https://upstash.com), and [Sentry](https://sentry.io).  
 
