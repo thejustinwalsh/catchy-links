@@ -57,10 +57,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
     case 'POST':
       {
         const allowed = new URL(
-          process.env.FALLBACK_URL ??
-            req.headers.origin ??
-            process.env.VERCEL_URL ??
-            '' // throws type error
+          process.env.FALLBACK_URL ?? process.env.VERCEL_URL ?? '' // throws type error
         );
 
         // Ensure link is within domain and not a protocol downgrade
